@@ -1,4 +1,4 @@
-# MAS - Multi-Agent System for EMIS
+ # MAS - Multi-Agent System for EMIS
 
 A production-grade Education Management Information System (EMIS) agent built with LangGraph, featuring intelligent tool orchestration, human-in-the-loop interactions, and streaming API capabilities.
 
@@ -116,7 +116,7 @@ pip install -e ".[dev]"
 First, ensure you have an OpenAPI-compatible backend running on `http://localhost:8080`, then start the MCP server:
 
 ```bash
-python my_mcp_server.py
+source .venv/bin/activate && fastmcp run my_mcp_server.py --transport=http --port=8000
 ```
 
 The MCP server will be available at `http://localhost:8000/mcp`
@@ -130,7 +130,7 @@ python streaming_api.py
 Or using uvicorn directly:
 
 ```bash
-uvicorn streaming_api:app --host 0.0.0.0 --port 8000 --reload
+source .venv/bin/activate && uvicorn streaming_api:app --host 0.0.0.0 --port 8001 --log-level info
 ```
 
 The API will be available at:
@@ -337,7 +337,7 @@ Error: Tool 'xyz' not found
 
 **Solution**: 
 1. Verify the backend API is running on `http://localhost:8080`
-2. Check the OpenAPI spec is accessible: `curl http://localhost:8080/v3/api-docs`
+2. Check the OpenAPI spec is accessible: `curl http://localhost:8080/v3/api-docs` 
 3. Restart the FastMCP server
 
 #### 4. Parallel Tool Execution Issues
