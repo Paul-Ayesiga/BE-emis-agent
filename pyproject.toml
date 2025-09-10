@@ -1,0 +1,122 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent", "src/execution", "src/integrations", "src/monitoring"]
+
+[project]
+name = "mas"
+version = "1.0.0"
+description = "Production-grade Education Management Information System Agent"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    {name = "EMIS Team", email = "team@emis.edu"},
+]
+
+dependencies = [
+    "aiosqlite>=0.21.0",
+    "asyncio>=3.4.3",
+    "backoff>=2.2.1",
+    "cachetools>=5.5.2",
+    "celery>=5.5.3",
+    "click>=8.2.1",
+    "fastapi>=0.116.1",
+    "fastmcp>=2.10.6",
+    "httpx>=0.28.1",
+    "jsonschema>=4.25.0",
+    "kombu>=5.5.4",
+    "langchain-google-genai>=2.1.8",
+    "langchain-tavily>=0.2.11",
+    "langgraph>=0.6.1",
+    "langgraph-checkpoint-sqlite>=2.0.11",
+    "langsmith>=0.4.8",
+    "mcp[cli]>=1.12.2",
+    "opentelemetry-api>=1.36.0",
+    "opentelemetry-exporter-prometheus>=0.57b0",
+    "opentelemetry-sdk>=1.36.0",
+    "passlib[bcrypt]>=1.7.4",
+    "prometheus-client>=0.22.1",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "pylint>=3.3.7",
+    "python-dateutil>=2.9.0.post0",
+    "python-dotenv>=1.1.1",
+    "python-jose[cryptography]>=3.5.0",
+    "python-multipart>=0.0.20",
+    "pyyaml>=6.0.2",
+    "redis>=6.2.0",
+    "requests>=2.32.4",
+    "rich>=14.1.0",
+    "starlette>=0.47.2",
+    "structlog>=25.4.0",
+    "tenacity>=9.1.2",
+    "toml>=0.10.2",
+    "typer>=0.16.0",
+    "uuid>=1.30",
+    "uvicorn>=0.35.0",
+    "reportlab>=4.2.2",
+    "weasyprint>=62.3",
+    "jinja2>=3.1.4",
+    "matplotlib>=3.9.2",
+    "pandas>=2.2.3",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "black>=24.10.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+    "pre-commit>=4.0.0",
+]
+docs = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.26.0",
+]
+production = [
+    "gunicorn>=23.0.0",
+    "sentry-sdk[fastapi]>=2.17.0",
+    "newrelic>=10.2.0",
+]
+
+[project.scripts]
+emis-agent = "emis_agent.cli:main"
+emis-operator = "emis_agent.operator_cli:main"
+emis-server = "emis_agent.server:main"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "black>=24.10.0",
+    "ruff>=0.8.0",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501", "N818"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--cov=emis_agent --cov-report=term-missing --cov-report=html"
